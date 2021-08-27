@@ -37,7 +37,6 @@ public class CustomerAccountController {
             String user=tokenValidator.getcurrentUser(token);
             try{
                 CustomerDetails customer =accountService.viewAccount(user);
-                
                 responseEntity= new ResponseEntity<CustomerDetails>(customer,HttpStatus.OK);
                 return responseEntity;
             }catch(Exception e){

@@ -9,7 +9,9 @@ import com.cognizant.transactionmicroservice.model.TransactionModel;
 import com.cognizant.transactionmicroservice.repository.TransactionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TransactionRecordServiceImpl implements TransactionRecordService {
 
     @Autowired

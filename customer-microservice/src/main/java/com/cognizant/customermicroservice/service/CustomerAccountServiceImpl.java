@@ -19,9 +19,9 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 
     @Override
     public CustomerDetails viewAccount(String user) {
+        log.info(user);
         CustomerDetails details=customerRepository.findById(user).get(); 
-        return details;
-     
+        return details;     
     }
 
     @Override
