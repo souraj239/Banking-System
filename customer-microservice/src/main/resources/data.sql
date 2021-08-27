@@ -1,0 +1,2 @@
+insert into customer (USERNAME,CUSTOMER_NAME,ACCOUNT_NUMBER,ACCOUNT_BALANCE) values ('souraj','SourajMukhopadhyay','917737764791',10000);
+insert into customer (USERNAME,CUSTOMER_NAME,ACCOUNT_NUMBER,ACCOUNT_BALANCE) values ('user','DummyUser','917024541770',2000);
