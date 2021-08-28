@@ -17,9 +17,12 @@ public class TokenValidationServiceImpl implements TokenValidationService {
 	@Autowired
 	private AuthClient authClient;
 
-        /**
-         * This method validates the token.
-         */
+        
+    /**
+     * This method will validate the token whether the token is valid or expired. 
+     * @param token 
+     * @return status of token validity
+     */
 	    @Override
 	    public boolean checkValidity(String token) {
 	        boolean valid = false;

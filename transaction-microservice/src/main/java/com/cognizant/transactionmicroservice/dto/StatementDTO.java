@@ -2,6 +2,7 @@ package com.cognizant.transactionmicroservice.dto;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(description = "model class for statement fields")
 public class StatementDTO {
 
     private Date transactionDate;

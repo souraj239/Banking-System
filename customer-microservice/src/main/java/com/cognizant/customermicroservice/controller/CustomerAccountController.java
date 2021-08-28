@@ -15,12 +15,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+
+/**
+ * -> URL="http:localhost:8089/".
+ * Use post mapping to perform transactions.
+ * It returns the status of the customerDetails.
+ * We use get mapping to get the customer details.
+ */
 
 @RestController
 @CrossOrigin("*")
 @Slf4j
+@Api(value="End point for transaction microservice to perform banking execution process")
 public class CustomerAccountController {
 
     @Autowired
@@ -30,8 +40,14 @@ public class CustomerAccountController {
     private CustomerAccountService accountService;
 
 
+      /**
+     * This method gets the statement the account.
+     * @param token
+     * @return response
+     */
     @GetMapping("/viewAccount")
-    public ResponseEntity<?> viewCustomerAccount(@RequestHeader(name = "Authorization",required = true)String token){
+    @ApiOperation(value = "Customer Accounr info", notes = "gives user Account details", httpMethod = "GET", response = ResponseEntity.class)
+    public ResponseEntity<?> viewCustomerAccount(@ApiParam (name = "account info", value = "get account details of the user")@RequestHeader(name = "Authorization",required = true)String token){
         log.info("view method");
 		if(tokenValidator.checkValidity(token)) {
 			log.info("token validated");
@@ -52,9 +68,16 @@ public class CustomerAccountController {
 		}        
     }
 
+      /**
+     * This method withdraw money from account.
+     * @param token.
+     * @param transaction
+     * @return response.
+     */
 
     @PostMapping("/withdrawAmount")
-    public ResponseEntity<?> withdrawAmount(@RequestHeader(name = "Authorization",required = true)String token, @RequestBody TransactionDTO transaction){
+    @ApiOperation(value = "cash withdraw", notes = "Withdraw Cash from the given account", httpMethod = "POST", response = ResponseEntity.class)
+    public ResponseEntity<?> withdrawAmount(@ApiParam (name = "Chash Withdraw", value = "amount")@RequestHeader(name = "Authorization",required = true)String token, @RequestBody TransactionDTO transaction){
         log.info("withdrawt method");
 		if(tokenValidator.checkValidity(token)) {
 			log.info("token validated");
@@ -74,8 +97,16 @@ public class CustomerAccountController {
 		}
     }
 
+    
+     /**
+     * This method deposit money to the account.
+     * @param token.
+     * @param transaction
+     * @return response.
+     */
     @PostMapping("/depositAmount")
-    public ResponseEntity<?> depositAmount(@RequestHeader(name = "Authorization",required = true)String token, @RequestBody TransactionDTO transaction){
+    @ApiOperation(value = "cash Deposit", notes = "Deposit Cash to the user account", httpMethod = "POST", response = ResponseEntity.class)
+    public ResponseEntity<?> depositAmount(@ApiParam (name = "Deposit Cash", value = "amount")@RequestHeader(name = "Authorization",required = true)String token, @RequestBody TransactionDTO transaction){
         log.info("withdraw method");
 		if(tokenValidator.checkValidity(token)) {
 			log.info("token validated");

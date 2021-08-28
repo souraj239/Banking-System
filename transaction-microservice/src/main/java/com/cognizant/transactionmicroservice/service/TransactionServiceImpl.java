@@ -17,7 +17,12 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-
+      /**
+     * This method gives the transfer money from source to reciepient.
+     * @param token.
+     * @param toUser.
+     * @return response.
+     */
     @Override
     public boolean transferAmount(String token,CustomerDetails fromAc, TransactionDTO toAc) {
         
@@ -49,6 +54,12 @@ public class TransactionServiceImpl implements TransactionService {
         }
     }
 
+     /**
+     * This method withdraw money from account.
+     * @param token.
+     * @param fromAC.
+     * @return response.
+     */
     @Override
     public boolean cashWithdraw(String token,TransactionDTO fromAc){
         try{
@@ -67,7 +78,12 @@ public class TransactionServiceImpl implements TransactionService {
             return false;
         }
     }
-
+     /**
+     * This method deposit money to the account.
+     * @param token.
+     * @param toAC.
+     * @return response.
+     */
     @Override
     public boolean depositCash(String token,TransactionDTO toAc){
         boolean result = customerClient.depositAmount(token,toAc).getBody();

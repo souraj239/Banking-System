@@ -20,12 +20,17 @@ public class TransactionRecordServiceImpl implements TransactionRecordService {
     @Autowired
     private TransactionRepository repo;
 
+     /**
+     * This method gets the statement the account.
+     * @param customer
+     * @return response
+     */
     @Override
     public List<StatementDTO> getStatement(CustomerDetails customer) {
         
         List<StatementDTO> statement = new ArrayList<>();
         log.info(customer.getCustomerName());
-        List<TransactionModel> transactions = repo.findAll();
+        List<TransactionModel> transactions = repo.findByUserName(customer.getUserName());
         for(TransactionModel transaction:transactions){
             StatementDTO st = new StatementDTO(transaction.getTransactionDate(),transaction.getDescription(),transaction.getTransactiontype(),transaction.getAmount());
             statement.add(st);

@@ -35,9 +35,9 @@ public class TransactionModel {
 
     private String userName;
 
-    private String from;
+    private String fromAc;
 
-    private String to;
+    private String toAc;
     
     private String description;
     
@@ -45,10 +45,10 @@ public class TransactionModel {
     
     private long amount;
     
-    public TransactionModel( String userName, String from, String to, String description, String transactiontype, long amount) {
+    public TransactionModel( String userName, String fromAc, String toAc, String description, String transactiontype, long amount) {
         this.userName = userName;
-        this.from = from;
-        this.to = to;
+        this.fromAc = fromAc;
+        this.toAc = toAc;
         this.description = description;
         this.transactiontype = transactiontype;
         this.amount = amount;

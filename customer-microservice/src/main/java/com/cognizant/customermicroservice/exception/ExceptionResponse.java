@@ -3,6 +3,10 @@ package com.cognizant.customermicroservice.exception;
 import java.time.LocalDateTime;
 
 public class ExceptionResponse {
+    /**
+	 * Its a exception class.
+	 * @param message
+	 */
     private String message;
     private LocalDateTime dateTime;
     
