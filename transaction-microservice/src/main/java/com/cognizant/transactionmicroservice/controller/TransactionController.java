@@ -2,6 +2,7 @@ package com.cognizant.transactionmicroservice.controller;
 
 import com.cognizant.transactionmicroservice.service.TokenValidationService;
 import com.cognizant.transactionmicroservice.client.CustomerClient;
+import com.cognizant.transactionmicroservice.dto.AmountDTO;
 import com.cognizant.transactionmicroservice.dto.CustomerDetails;
 import com.cognizant.transactionmicroservice.dto.StatementDTO;
 import com.cognizant.transactionmicroservice.dto.TransactionDTO;
@@ -37,6 +38,7 @@ public class TransactionController {
 
     @Autowired
     private CustomerClient client;
+
     
     @PostMapping("/transferMoney")
     public ResponseEntity<?> transferMoney(@RequestHeader(name = "Authorization",required = true)String token,@RequestBody TransactionDTO toUser){
@@ -55,10 +57,10 @@ public class TransactionController {
     } 
 
     @PostMapping("/cashWithdraw")
-    public ResponseEntity<?> cashWithdraw(@RequestHeader(name = "Authorization",required = true)String token,@RequestBody long amount){
+    public ResponseEntity<?> cashWithdraw(@RequestHeader(name = "Authorization",required = true)String token,@RequestBody AmountDTO amount){
         if(tokenValidator.checkValidity(token)){
             log.info("token validated");
-            TransactionDTO transactionDTO=new TransactionDTO(client.viewCustomerAccount(token).getBody().getUserName(),amount);
+            TransactionDTO transactionDTO=new TransactionDTO(client.viewCustomerAccount(token).getBody().getUserName(),amount.getAmount());
             if(transactionService.cashWithdraw(token, transactionDTO)){
                 return new ResponseEntity<CustomerDetails>(client.viewCustomerAccount(token).getBody(), HttpStatus.OK);
             }
@@ -72,10 +74,10 @@ public class TransactionController {
     }
 
     @PostMapping("/cashDeposit")
-    public ResponseEntity<?> cashDeposit(@RequestHeader(name = "Authorization",required = true)String token,@RequestBody long amount){
+    public ResponseEntity<?> cashDeposit(@RequestHeader(name = "Authorization",required = true)String token,@RequestBody AmountDTO amount){
         if(tokenValidator.checkValidity(token)){
             log.info("token validated");
-            TransactionDTO transactionDTO=new TransactionDTO(client.viewCustomerAccount(token).getBody().getUserName(),amount);
+            TransactionDTO transactionDTO=new TransactionDTO(client.viewCustomerAccount(token).getBody().getUserName(),amount.getAmount());
             transactionService.depositCash(token, transactionDTO);
             return new ResponseEntity<CustomerDetails>(client.viewCustomerAccount(token).getBody(), HttpStatus.OK);
         }
@@ -87,7 +89,8 @@ public class TransactionController {
 
     @GetMapping("/getStatement")
     @ApiOperation(value = "Statement info", notes = "gives user Bank Statement", httpMethod = "GET", response = ResponseEntity.class)
-    public ResponseEntity<?> auditHistory(@RequestHeader(name = "Authorization",required = true)String token){
+    public ResponseEntity<?> getSTatement(@RequestHeader(name = "Authorization",required = true)String token){
+        log.info("msg");
         if(tokenValidator.checkValidity(token)){
             CustomerDetails customer= client.viewCustomerAccount(token).getBody();
             List<StatementDTO> customerStatement=transactionRecordService.getStatement(customer);

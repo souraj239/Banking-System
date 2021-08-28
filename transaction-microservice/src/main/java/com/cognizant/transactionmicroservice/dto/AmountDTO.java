@@ -7,17 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class CustomerDetails {
-
-    private String userName;
-
-    private String customerName;
-
-    private String accountNumber;
-
-    private long accountBalance;
-
+@AllArgsConstructor
+public class AmountDTO {
     
+    private long amount;
 }

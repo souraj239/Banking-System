@@ -11,7 +11,10 @@ import com.cognizant.transactionmicroservice.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class TransactionRecordServiceImpl implements TransactionRecordService {
 
     @Autowired
@@ -21,7 +24,8 @@ public class TransactionRecordServiceImpl implements TransactionRecordService {
     public List<StatementDTO> getStatement(CustomerDetails customer) {
         
         List<StatementDTO> statement = new ArrayList<>();
-        List<TransactionModel> transactions = repo.findByUserName(customer.getUserName());
+        log.info(customer.getCustomerName());
+        List<TransactionModel> transactions = repo.findAll();
         for(TransactionModel transaction:transactions){
             StatementDTO st = new StatementDTO(transaction.getTransactionDate(),transaction.getDescription(),transaction.getTransactiontype(),transaction.getAmount());
             statement.add(st);

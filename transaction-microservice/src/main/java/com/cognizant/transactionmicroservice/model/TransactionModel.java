@@ -16,14 +16,12 @@ import lombok.Setter;
 
 import java.util.Date;
 
-
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="Transactions")
+@Table(name="transactions")
 public class TransactionModel {
 
 
@@ -40,7 +38,13 @@ public class TransactionModel {
     private String from;
 
     private String to;
-
+    
+    private String description;
+    
+    private String transactiontype;
+    
+    private long amount;
+    
     public TransactionModel( String userName, String from, String to, String description, String transactiontype, long amount) {
         this.userName = userName;
         this.from = from;
@@ -49,11 +53,5 @@ public class TransactionModel {
         this.transactiontype = transactiontype;
         this.amount = amount;
     }
-
-    private String description;
-
-    private String transactiontype;
-
-    private long amount;
 
 }

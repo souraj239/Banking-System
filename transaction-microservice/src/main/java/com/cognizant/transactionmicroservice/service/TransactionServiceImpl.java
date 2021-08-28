@@ -20,6 +20,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public boolean transferAmount(String token,CustomerDetails fromAc, TransactionDTO toAc) {
+        
         try{
             boolean result=customerClient.withdrawAmount(token, new TransactionDTO(fromAc.getUserName(),toAc.getAmount())).getBody();
             if(result==true){
