@@ -55,10 +55,14 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
      */
     @Override
     public boolean depositAmount(TransactionDTO transaction) {
+        if(transaction.getAmount()>0){
         CustomerDetails customerDetails=this.viewAccount(transaction.getUserName());   
         customerDetails.setAccountBalance(customerDetails.getAccountBalance()+transaction.getAmount());
         customerRepository.save(customerDetails);
         return true;
+        }else{
+            return false;
+        }
     }
     
 }

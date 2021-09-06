@@ -35,7 +35,7 @@ public class TransactionServiceImpl implements TransactionService {
                 boolean result2=customerClient.depositAmount(token, toAc).getBody();
                 if(result2==true){
                     String message2="Recieved from "+fromAc.getUserName();
-                    TransactionModel transactionTo=new TransactionModel(fromAc.getUserName(),fromAc.getUserName(),toAc.getUserName(),message2,"CREDIT",toAc.getAmount());
+                    TransactionModel transactionTo=new TransactionModel(toAc.getUserName(),fromAc.getUserName(),toAc.getUserName(),message2,"CREDIT",toAc.getAmount());
                     transactionRepository.save(transactionTo);
                     return true;
                 }else{

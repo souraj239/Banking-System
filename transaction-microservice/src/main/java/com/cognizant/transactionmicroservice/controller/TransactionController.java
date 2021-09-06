@@ -6,6 +6,7 @@ import com.cognizant.transactionmicroservice.dto.AmountDTO;
 import com.cognizant.transactionmicroservice.dto.CustomerDetails;
 import com.cognizant.transactionmicroservice.dto.StatementDTO;
 import com.cognizant.transactionmicroservice.dto.TransactionDTO;
+import com.cognizant.transactionmicroservice.dto.TempTransactionDTO;
 import com.cognizant.transactionmicroservice.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,14 +59,16 @@ public class TransactionController {
      */
     @PostMapping("/transferMoney")
     @ApiOperation(value = "Money Transfer", notes = "takes user receptient details like user Name, amount to transfer the amount", httpMethod = "POST", response = ResponseEntity.class)
-    public ResponseEntity<?> transferMoney(@ApiParam (name = "Money Transfer", value = "details of the Recieptent")@RequestHeader(name = "Authorization",required = true)String token,@RequestBody TransactionDTO toUser){
+    public ResponseEntity<?> transferMoney(@ApiParam (name = "Money Transfer", value = "details of the Recieptent")@RequestHeader(name = "Authorization",required = true)String token,@RequestBody TempTransactionDTO tempToUser){
+        log.info(tempToUser.getAmount());
+        TransactionDTO toUser=tempToUser.getConverted();
         if(tokenValidator.checkValidity(token)){
             log.info("token validated");
             if(transactionService.transferAmount(token, client.viewCustomerAccount(token).getBody(), toUser)){
                 return new ResponseEntity<CustomerDetails>(client.viewCustomerAccount(token).getBody(), HttpStatus.OK);
             }
             else{
-                return new ResponseEntity<String>("Account Not Found",HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<CustomerDetails>(client.viewCustomerAccount(token).getBody(),HttpStatus.BAD_REQUEST);
             }
         }else{
             log.error("token expired");
